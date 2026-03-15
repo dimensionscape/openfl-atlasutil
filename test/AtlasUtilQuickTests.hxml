@@ -1,0 +1,6 @@
+-cp src
+-cp test
+-lib lime
+-lib openfl
+-main tests.AtlasUtilQuickTests
+-neko bin/tests/atlasutil_quick_tests.n

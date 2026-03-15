@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TextureAtlas imagePath="mage_demo.png" width="138" height="64">
+    <SubTexture name="stand" x="2" y="2" width="32" height="60" frameX="0" frameY="-4" frameWidth="32" frameHeight="74"/>
+    <SubTexture name="walk0001" x="36" y="2" width="32" height="58" frameX="0" frameY="-4" frameWidth="32" frameHeight="74"/>
+    <SubTexture name="walk0002" x="70" y="2" width="32" height="58" frameX="0" frameY="-4" frameWidth="32" frameHeight="74"/>
+    <SubTexture name="walk0003" x="104" y="2" width="32" height="60" frameX="0" frameY="-4" frameWidth="32" frameHeight="74"/>
+</TextureAtlas>

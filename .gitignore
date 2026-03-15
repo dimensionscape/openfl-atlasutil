@@ -1,0 +1,9 @@
+artifacts/
+bin/
+demo/bin/
+demo/export/
+demo/obj/
+*.zip
+.DS_Store
+Thumbs.db
+/tmp

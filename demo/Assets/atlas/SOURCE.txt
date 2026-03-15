@@ -1,0 +1,5 @@
+Demo atlas source:
+Derived from "Mage sprites (Idle and Walking)" by Sollision on OpenGameArt.org.
+License: CC0 / Public Domain.
+Source page: https://opengameart.org/content/mage-sprites-idle-and-walking
+This repository ships a small derived Sparrow atlas for demo and test purposes.
