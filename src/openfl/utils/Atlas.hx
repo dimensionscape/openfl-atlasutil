@@ -22,32 +22,32 @@ import openfl.geom.Rectangle;
 	reconstructing trimmed or rotated frames as `BitmapData`, `Bitmap`, or
 	`MovieClip` instances.
 
-	`AtlasUtil` caches both loaded atlases and reconstructed frame bitmaps so the
+	`Atlas` caches both loaded atlases and reconstructed frame bitmaps so the
 	common lookup path stays cheap after the first request.
 
 	Basic usage:
 
 	```haxe
-	var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+	var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 	var stand = atlas.createBitmap("stand");
 	var walk = atlas.createMovieClip("walk", 12);
 	```
 
-	`AtlasUtil` can also expose atlas-aware helpers on `openfl.display.Tileset`
+	`Atlas` can also expose atlas-aware helpers on `openfl.display.Tileset`
 	using Haxe static extensions. This does not modify or subclass `Tileset` at
-	the call site. Instead, Haxe lets compatible static methods on `AtlasUtil`
+	the call site. Instead, Haxe lets compatible static methods on `Atlas`
 	behave like instance methods when you add:
 
 	```haxe
-	using openfl.utils.AtlasUtil;
+	using openfl.utils.Atlas;
 	```
 
 	Example:
 
 	```haxe
-	using openfl.utils.AtlasUtil;
+	using openfl.utils.Atlas;
 
-	var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+	var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 	var tileset = atlas.createTileset();
 
 	if (tileset.hasSubTextureId("walk0001")) {
@@ -57,9 +57,9 @@ import openfl.geom.Rectangle;
 	```
 **/
 @:beta
-class AtlasUtil {
+class Atlas {
 	@:noCompletion
-	private static var __atlasCache:StringMap<AtlasUtil> = new StringMap();
+	private static var __atlasCache:StringMap<Atlas> = new StringMap();
 
 	/**
 		Loads a Sparrow atlas from the OpenFL asset system.
@@ -69,9 +69,9 @@ class AtlasUtil {
 
 		@param xmlAssetId The asset ID for the Sparrow XML file.
 		@param imageAssetId The optional asset ID for the atlas image.
-		@return A cached `AtlasUtil` instance for the requested atlas.
+		@return A cached `Atlas` instance for the requested atlas.
 	**/
-	public static function load(xmlAssetId:String, ?imageAssetId:String):AtlasUtil {
+	public static function load(xmlAssetId:String, ?imageAssetId:String):Atlas {
 		var cacheKey = xmlAssetId + "|" + (imageAssetId == null ? "" : imageAssetId);
 		var cachedAtlas = __atlasCache.get(cacheKey);
 
@@ -86,7 +86,7 @@ class AtlasUtil {
 			resolvedImageAssetId = __resolveImageAssetId(xmlAssetId, atlasXml.get("imagePath"));
 		}
 
-		var atlas = new AtlasUtil(Assets.getBitmapData(resolvedImageAssetId), atlasXml, resolvedImageAssetId, xmlAssetId);
+		var atlas = new Atlas(Assets.getBitmapData(resolvedImageAssetId), atlasXml, resolvedImageAssetId, xmlAssetId);
 		__atlasCache.set(cacheKey, atlas);
 		return atlas;
 	}
@@ -141,15 +141,15 @@ class AtlasUtil {
 		Creates an atlas-backed `Tileset` from a Sparrow atlas.
 
 		The resulting object is still a normal `Tileset`, but it carries atlas
-		metadata internally so `AtlasUtil` can provide `Tileset` extension helpers.
+		metadata internally so `Atlas` can provide `Tileset` extension helpers.
 
-		With Haxe `using`, static methods on `AtlasUtil` become extension methods on
+		With Haxe `using`, static methods on `Atlas` become extension methods on
 		compatible values such as `Tileset`.
 
 		```haxe
-		using openfl.utils.AtlasUtil;
+		using openfl.utils.Atlas;
 
-		var tileset = AtlasUtil.createTilesetFromAssets("assets/atlas/mage_demo.xml");
+		var tileset = Atlas.createTilesetFromAssets("assets/atlas/mage_demo.xml");
 
 		if (tileset.hasSubTextureId("walk0001")) {
 			trace(tileset.getTileId("walk0001"));
@@ -165,10 +165,10 @@ class AtlasUtil {
 	}
 
 	/**
-		Returns `true` when a `Tileset` was created by `AtlasUtil`.
+		Returns `true` when a `Tileset` was created by `Atlas`.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to inspect.
 		@return `true` when atlas metadata is available on the tileset.
@@ -181,7 +181,7 @@ class AtlasUtil {
 		Returns `true` if an atlas-backed `Tileset` contains a sub texture.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to inspect.
 		@param subTextureId The atlas sub texture ID to test.
@@ -195,7 +195,7 @@ class AtlasUtil {
 		Returns the tile ID for an atlas sub texture.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to query.
 		@param subTextureId The atlas sub texture ID to resolve.
@@ -209,7 +209,7 @@ class AtlasUtil {
 		Returns the atlas sub texture ID for a tile ID.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to query.
 		@param tileId The tile ID to resolve.
@@ -223,7 +223,7 @@ class AtlasUtil {
 		Creates a `Tile` for an atlas sub texture.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to query.
 		@param subTextureId The atlas sub texture ID to resolve.
@@ -240,7 +240,7 @@ class AtlasUtil {
 		Creates a `Tile` for an atlas-backed tile ID.
 
 		This is available as a static extension when you import
-		`using openfl.utils.AtlasUtil`.
+		`using openfl.utils.Atlas`.
 
 		@param tileset The tileset to query.
 		@param tileId The tile ID to resolve.
@@ -295,7 +295,7 @@ class AtlasUtil {
 	/**
 		Creates a new atlas from bitmap data and Sparrow XML content.
 
-		In most cases you should prefer `AtlasUtil.load` over calling this
+		In most cases you should prefer `Atlas.load` over calling this
 		constructor directly.
 
 		@param bitmapData The source atlas bitmap data.
@@ -481,14 +481,14 @@ class AtlasUtil {
 
 		The tileset uses atlas regions directly for efficient tile rendering. Trim and
 		rotation metadata are preserved when you create `Tile` instances through the
-		`AtlasUtil` static extension helpers.
+		`Atlas` static extension helpers.
 
 		Example:
 
 		```haxe
-		using openfl.utils.AtlasUtil;
+		using openfl.utils.Atlas;
 
-		var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+		var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 		var tileset = atlas.createTileset();
 		var tile = tileset.createTile("stand", 0, 0);
 		```
@@ -547,7 +547,7 @@ class AtlasUtil {
 	@:noCompletion
 	private function __assertNotDisposed():Void {
 		if (__disposed) {
-			throw "AtlasUtil has been disposed.";
+			throw "Atlas has been disposed.";
 		}
 	}
 
@@ -572,7 +572,7 @@ class AtlasUtil {
 			return __normalizeXmlRoot(Xml.parse(cast xmlSource));
 		}
 
-		throw "AtlasUtil expected Xml or String xmlSource.";
+		throw "Atlas expected Xml or String xmlSource.";
 	}
 
 	@:noCompletion
@@ -771,7 +771,7 @@ class AtlasUtil {
 	}
 
 	@:noCompletion
-	private static function __removeFromCache(instance:AtlasUtil):Void {
+	private static function __removeFromCache(instance:Atlas):Void {
 		var keysToRemove:Array<String> = [];
 
 		for (cacheKey in __atlasCache.keys()) {
@@ -875,7 +875,7 @@ class AtlasUtil {
 		var atlasTileset = Std.downcast(tileset, AtlasTileset);
 
 		if (atlasTileset == null) {
-			throw "Tileset is not an AtlasUtil tileset.";
+			throw "Tileset is not an Atlas tileset.";
 		}
 
 		return atlasTileset;
@@ -913,9 +913,9 @@ private class AtlasFrame {
 }
 
 @:noCompletion
-@:access(openfl.utils.AtlasUtil)
+@:access(openfl.utils.Atlas)
 private class AtlasTileset extends Tileset {
-	public var atlas(default, null):AtlasUtil;
+	public var atlas(default, null):Atlas;
 
 	@:noCompletion
 	private var __subTextureIdByTileId:Array<String>;
@@ -926,7 +926,7 @@ private class AtlasTileset extends Tileset {
 	@:noCompletion
 	private var __tilePlacementsById:Array<AtlasTilePlacement>;
 
-	public function new(atlas:AtlasUtil) {
+	public function new(atlas:Atlas) {
 		super(atlas.atlasBitmapData);
 
 		this.atlas = atlas;

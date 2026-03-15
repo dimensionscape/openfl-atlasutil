@@ -11,10 +11,10 @@
     "movieclip"
   ],
   "description": "An OpenFL extension for loading Sparrow atlases, reconstructing trimmed and rotated frames, creating MovieClips, and adding atlas-aware Tileset helpers through Haxe static extensions.",
-  "version": "0.1.0",
-  "releasenote": "Initial preview release.",
+  "version": "1.0.0",
+  "releasenote": "1.0.0 Release",
   "contributors": [
-    "dimensionscape"
+    "Dimensionscape"
   ],
   "classPath": "src",
   "dependencies": {

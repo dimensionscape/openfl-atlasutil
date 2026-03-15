@@ -2,7 +2,7 @@
 
 `openfl-atlasutil` is an OpenFL extension for working with Sparrow / TexturePacker atlases.
 
-It focuses on a single utility class, `openfl.utils.AtlasUtil`, which can:
+It focuses on a single atlas class, `openfl.utils.Atlas`, which can:
 
 - load Sparrow atlas XML plus image assets from OpenFL `Assets`
 - reconstruct trimmed subtextures as `BitmapData` or `Bitmap`
@@ -17,18 +17,18 @@ The library is currently packaged as a preview release.
 
 This library does not replace OpenFL types. It layers atlas-specific behavior on top of them.
 
-The best example is `Tileset` support. `AtlasUtil` creates a normal OpenFL `Tileset`, then Haxe static extensions make atlas helpers feel like native `Tileset` methods when you opt in with:
+The best example is `Tileset` support. `Atlas` creates a normal OpenFL `Tileset`, then Haxe static extensions make atlas helpers feel like native `Tileset` methods when you opt in with:
 
 ```haxe
-using openfl.utils.AtlasUtil;
+using openfl.utils.Atlas;
 ```
 
 That means this:
 
 ```haxe
-using openfl.utils.AtlasUtil;
+using openfl.utils.Atlas;
 
-var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 var tileset = atlas.createTileset();
 
 if (tileset.hasSubTextureId("walk0001")) {
@@ -37,7 +37,7 @@ if (tileset.hasSubTextureId("walk0001")) {
 }
 ```
 
-is resolved by Haxe to compatible static methods on `AtlasUtil`. It is an OpenFL extension pattern, not a custom `Tileset` API that replaces OpenFL.
+is resolved by Haxe to compatible static methods on `Atlas`. It is an OpenFL extension pattern, not a custom `Tileset` API that replaces OpenFL.
 
 ## Install
 
@@ -58,9 +58,9 @@ Then add it to your OpenFL project:
 ```haxe
 import openfl.display.Bitmap;
 import openfl.display.MovieClip;
-import openfl.utils.AtlasUtil;
+import openfl.utils.Atlas;
 
-var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 
 var stand:Bitmap = atlas.createBitmap("stand", true);
 addChild(stand);
@@ -75,11 +75,11 @@ addChild(walk);
 ```haxe
 import openfl.display.Tilemap;
 import openfl.display.Tileset;
-import openfl.utils.AtlasUtil;
+import openfl.utils.Atlas;
 
-using openfl.utils.AtlasUtil;
+using openfl.utils.Atlas;
 
-var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 var tileset:Tileset = atlas.createTileset();
 var tilemap = new Tilemap(512, 512, tileset, true);
 
@@ -94,7 +94,7 @@ tilemap.addTile(tileset.createTileById(walkTileId, 128, 0, true));
 
 ## API summary
 
-Main entry points on `AtlasUtil`:
+Main entry points on `Atlas`:
 
 - `load`
 - `createBitmapDataFromAssets`
@@ -106,7 +106,7 @@ Main entry points on `AtlasUtil`:
 - `createMovieClip`
 - `createTileset`
 
-`Tileset` extension helpers exposed through `using AtlasUtil`:
+`Tileset` extension helpers exposed through `using Atlas`:
 
 - `isAtlasTileset`
 - `hasSubTextureId`
@@ -138,14 +138,14 @@ A lightweight correctness runner is included under [`test/`](test).
 Compile and run it from the library root:
 
 ```bash
-haxe test/AtlasUtilQuickTests.hxml
-neko bin/tests/atlasutil_quick_tests.n
+haxe test/AtlasQuickTests.hxml
+neko bin/tests/atlas_quick_tests.n
 ```
 
 It writes a text report to:
 
 ```text
-artifacts/atlasutil-quick-tests.txt
+artifacts/atlas-quick-tests.txt
 ```
 
 Coverage includes:

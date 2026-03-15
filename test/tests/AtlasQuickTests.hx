@@ -9,16 +9,16 @@ import openfl.display.Tile;
 import openfl.display.Tileset;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import openfl.utils.AtlasUtil;
+import openfl.utils.Atlas;
 import sys.FileSystem;
 import sys.io.File;
 
-using openfl.utils.AtlasUtil;
+using openfl.utils.Atlas;
 
-class AtlasUtilQuickTests {
+class AtlasQuickTests {
 	private static inline var __DEMO_IMAGE_PATH = "demo/Assets/atlas/mage_demo.png";
 	private static inline var __DEMO_XML_PATH = "demo/Assets/atlas/mage_demo.xml";
-	private static inline var __REPORT_PATH = "artifacts/atlasutil-quick-tests.txt";
+	private static inline var __REPORT_PATH = "artifacts/atlas-quick-tests.txt";
 
 	private static var __passed:Int = 0;
 	private static var __failed:Int = 0;
@@ -27,7 +27,7 @@ class AtlasUtilQuickTests {
 	public static function main():Void {
 		var startedAt = Timer.stamp();
 
-		__reportLines.push("AtlasUtil quick tests");
+		__reportLines.push("Atlas quick tests");
 		__reportLines.push("Generated: " + Date.now().toString());
 		__reportLines.push("");
 
@@ -110,7 +110,7 @@ class AtlasUtilQuickTests {
 		atlas.dispose(true);
 		__assertThrows(function():Void {
 			atlas.createBitmapData("stand");
-		}, "AtlasUtil has been disposed.");
+		}, "Atlas has been disposed.");
 	}
 
 	private static function __testSequenceMovieClips():Void {
@@ -144,7 +144,7 @@ class AtlasUtilQuickTests {
 		var standTile = tileset.createTile("stand", 10, 20);
 		var assignedTile = tileset.createTileById(standTileId, 1, 2, true);
 
-		__assertTrue(AtlasUtil.isAtlasTileset(tileset), "Expected AtlasUtil-created tileset metadata.");
+		__assertTrue(Atlas.isAtlasTileset(tileset), "Expected Atlas-created tileset metadata.");
 		__assertTrue(tileset.hasSubTextureId("stand"), "stand tile should exist.");
 		__assertFalse(tileset.hasSubTextureId("missing"), "Missing tile should not exist.");
 		__assertEquals("stand", tileset.getSubTextureId(standTileId));
@@ -216,13 +216,13 @@ class AtlasUtilQuickTests {
 		}
 	}
 
-	private static function __createDemoAtlas():AtlasUtil {
+	private static function __createDemoAtlas():Atlas {
 		var bitmapData = BitmapData.fromFile(__DEMO_IMAGE_PATH);
 		__assertTrue(bitmapData != null, "Failed to load demo atlas bitmap data.");
-		return new AtlasUtil(bitmapData, File.getContent(__DEMO_XML_PATH), __DEMO_IMAGE_PATH, __DEMO_XML_PATH);
+		return new Atlas(bitmapData, File.getContent(__DEMO_XML_PATH), __DEMO_IMAGE_PATH, __DEMO_XML_PATH);
 	}
 
-	private static function __createRotatedFixture(rotation:Int):{atlas:AtlasUtil, expected:BitmapData} {
+	private static function __createRotatedFixture(rotation:Int):{atlas:Atlas, expected:BitmapData} {
 		var expected = new BitmapData(4, 4, true, 0);
 		var source = new BitmapData(2, 3, true, 0);
 		var colors = [
@@ -255,7 +255,7 @@ class AtlasUtilQuickTests {
 		packed.dispose();
 
 		return {
-			atlas: new AtlasUtil(atlasBitmapData, xml),
+			atlas: new Atlas(atlasBitmapData, xml),
 			expected: expected
 		};
 	}

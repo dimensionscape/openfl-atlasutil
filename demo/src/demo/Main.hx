@@ -5,9 +5,9 @@ import openfl.display.PixelSnapping;
 import openfl.display.Sprite;
 import openfl.display.Tilemap;
 import openfl.display.Tileset;
-import openfl.utils.AtlasUtil;
+import openfl.utils.Atlas;
 
-using openfl.utils.AtlasUtil;
+using openfl.utils.Atlas;
 
 class Main extends Sprite {
 	public function new() {
@@ -20,7 +20,7 @@ class Main extends Sprite {
 		var gap = 24.0;
 		var frameGap = 12.0;
 		var displayScale = 3.0;
-		var atlas = AtlasUtil.load("assets/atlas/mage_demo.xml");
+		var atlas = Atlas.load("assets/atlas/mage_demo.xml");
 		var sourceAtlasBitmap = new Bitmap(atlas.atlasBitmapData, PixelSnapping.AUTO, false);
 		sourceAtlasBitmap.smoothing = false;
 		sourceAtlasBitmap.scaleX = displayScale;

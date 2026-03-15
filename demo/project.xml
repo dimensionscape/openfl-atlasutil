@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-	<meta title="AtlasUtil Demo" package="com.dimensionscape.atlasutil.demo" version="0.1.0" company="dimensionscape" />
-	<app main="demo.Main" path="bin" file="AtlasUtilDemo" />
+	<meta title="Atlas Demo" package="com.dimensionscape.atlas.demo" version="0.1.0" company="dimensionscape" />
+	<app main="demo.Main" path="bin" file="AtlasDemo" />
 
 	<window width="900" height="560" fps="60" background="#1B1E24" />
 
